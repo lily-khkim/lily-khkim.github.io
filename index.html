@@ -1,114 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Kyunghyun Kim</title>
+<meta charset="UTF-8">
+<title>Kyunghyun Kim</title>
 
-  <!-- 폰트 -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #0a192f;
-      color: #ccd6f6;
-    }
+<style>
+html {
+  scroll-behavior: smooth;
+}
 
-    .container {
-      padding: 100px 20%;
-    }
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #0a192f;
+  color: #8892b0;
+  display: flex;
+}
 
-    h1 {
-      font-size: 60px;
-      margin-bottom: 10px;
-    }
+/* 왼쪽 고정 영역 */
+.sidebar {
+  width: 35%;
+  height: 100vh;
+  position: fixed;
+  padding: 120px 80px;
+  box-sizing: border-box;
+}
 
-    h2 {
-      font-size: 30px;
-      color: #64ffda;
-      margin-bottom: 20px;
-    }
+/* 이름 */
+.sidebar h1 {
+  color: #ccd6f6;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
 
-    p {
-      font-size: 18px;
-      line-height: 1.6;
-      max-width: 600px;
-    }
+/* 직업 */
+.sidebar p {
+  font-size: 14px;
+  margin-bottom: 60px;
+}
 
-    a {
-      color: #64ffda;
-      text-decoration: none;
-    }
+/* 네비 */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
 
-    a:hover {
-      text-decoration: underline;
-    }
+.nav a {
+  position: relative;
+  text-decoration: none;
+  color: #8892b0;
+  font-size: 13px;
+  letter-spacing: 2px;
+  padding-left: 40px;
+}
 
-    .section {
-      margin-bottom: 120px;
-    }
+/* 왼쪽 선 */
+.nav a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 30px;
+  height: 1px;
+  background: #8892b0;
+  transform: translateY(-50%);
+  transition: 0.3s;
+}
 
-    .projects div {
-      margin-bottom: 20px;
-    }
+/* hover 효과 */
+.nav a:hover {
+  color: #ccd6f6;
+}
 
-    .project-title {
-      font-size: 22px;
-      font-weight: bold;
-    }
+.nav a:hover::before {
+  width: 50px;
+  background: #ccd6f6;
+}
 
-    .nav {
-      position: fixed;
-      top: 20px;
-      right: 40px;
-    }
+/* 오른쪽 콘텐츠 */
+.content {
+  margin-left: 35%;
+  padding: 120px 25%;
+  width: 65%;
+  box-sizing: border-box;
+}
 
-    .nav a {
-      margin-left: 20px;
-      font-size: 14px;
-    }
-  </style>
+.section {
+  margin-bottom: 120px;
+  max-width: 600px;
+}
+
+.section p {
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* 강조 텍스트 */
+.highlight {
+  color: #ccd6f6;
+  font-weight: 500;
+}
+
+a.inline {
+  color: #ccd6f6;
+  text-decoration: none;
+  border-bottom: 1px solid #233554;
+}
+
+a.inline:hover {
+  color: #64ffda;
+  border-bottom: 1px solid #64ffda;
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- 네비게이션 -->
+<!-- 왼쪽 -->
+<div class="sidebar">
+  <h1>Kyunghyun Kim</h1>
+  <p>Battery Researcher</p>
+
   <div class="nav">
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
+    <a href="#about">ABOUT</a>
+    <a href="#experience">EXPERIENCE</a>
+    <a href="#projects">PROJECTS</a>
+  </div>
+</div>
+
+<!-- 오른쪽 -->
+<div class="content">
+
+  <div class="section" id="about">
+    <p>
+      I build and scale design systems and front-end architecture for digital products.
+      Currently, I'm focused on evolving systems and ensuring accessibility across platforms.
+    </p>
+
+    <p>
+      Previously, I've worked across a wide range of environments —
+      from startups to large tech companies — including
+      <span class="highlight">Apple</span>,
+      <span class="highlight">Starry Internet</span>,
+      and <span class="highlight">Upstatement</span>.
+      I also created an <span class="highlight">online video course</span>.
+    </p>
+
+    <p>
+      In my spare time, I enjoy climbing, playing tennis,
+      and exploring new ideas.
+    </p>
   </div>
 
-  <div class="container">
-
-    <!-- 소개 -->
-    <div class="section" id="about">
-      <h1>Hi, I'm Kyunghyun</h1>
-      <h2>Battery Researcher</h2>
-      <p>
-        I study battery materials and electrochemical systems.
-        I'm interested in energy storage, sustainability, and building meaningful technology.
-      </p>
-    </div>
-
-    <!-- 프로젝트 -->
-    <div class="section" id="projects">
-      <h2>Projects</h2>
-
-      <div class="projects">
-        <div>
-          <div class="project-title">🔋 Battery Analysis Project</div>
-          <p>Analyzed degradation mechanisms in lithium-ion batteries.</p>
-        </div>
-
-        <div>
-          <div class="project-title">⚡ Energy Storage Study</div>
-          <p>Researched next-generation solid-state battery systems.</p>
-        </div>
-      </div>
-    </div>
-
+  <div class="section" id="experience">
+    <p>
+      Experience section (추가 가능)
+    </p>
   </div>
+
+  <div class="section" id="projects">
+    <p>
+      Projects section (추가 가능)
+    </p>
+  </div>
+
+</div>
 
 </body>
 </html>
