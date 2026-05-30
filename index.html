@@ -1,234 +1,684 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Kyunghyun Kim</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #21262d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --accent: #58a6ff;
+      --accent-dim: rgba(88, 166, 255, 0.1);
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-<style>
-html {
-  scroll-behavior: smooth;
-}
+    html { scroll-behavior: smooth; }
 
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: #0a192f;
-  color: #8892b0;
-  display: flex;
-}
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* 왼쪽 고정 영역 */
-.sidebar {
-  width: 35%;
-  height: 100vh;
-  position: fixed;
-  padding: 120px 80px;
-  box-sizing: border-box;
-}
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-/* 이름 */
-.sidebar h1 {
-  color: #ccd6f6;
-  font-size: 35px;
-  margin-bottom: 10px;
-}
+    /* Layout */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
 
-/* 직업 */
-.sidebar p {
-  font-size: 20px;
-  margin-bottom: 60px;
-}
+    /* Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 340px;
+      min-width: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 80px 0 80px 0;
+    }
 
-/* 네비 */
-.nav {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
+    .sidebar-top h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
 
-.nav a {
-  position: relative;
-  text-decoration: none;
-  color: #8892b0;
-  font-size: 13px;
-  letter-spacing: 2px;
-  padding-left: 40px;
-}
+    .sidebar-top h2 {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      letter-spacing: 0.01em;
+      margin-bottom: 20px;
+    }
 
-/* 왼쪽 선 */
-.nav a::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 30px;
-  height: 1px;
-  background: #8892b0;
-  transform: translateY(-50%);
-  transition: 0.3s;
-}
+    .sidebar-top p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      max-width: 260px;
+      line-height: 1.8;
+    }
 
-/* hover 효과 */
-.nav a:hover {
-  color: #ccd6f6;
-}
+    /* Nav */
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 48px;
+    }
 
-.nav a:hover::before {
-  width: 50px;
-  background: #ccd6f6;
-}
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 6px 0;
+      transition: color 0.2s ease;
+      width: fit-content;
+    }
 
-/* 오른쪽 콘텐츠 */
-.content {
-  margin-left: 35%;
-  padding: 120px 25%;
-  width: 65%;
-  box-sizing: border-box;
-}
+    nav a .nav-line {
+      display: block;
+      height: 1px;
+      width: 24px;
+      background: var(--text-secondary);
+      transition: width 0.3s ease, background 0.2s ease;
+    }
 
-.section {
-  margin-bottom: 120px;
-  max-width: 600px;
-}
+    nav a:hover { color: var(--text-primary); }
+    nav a:hover .nav-line { width: 40px; background: var(--accent); }
+    nav a.active { color: var(--text-primary); }
+    nav a.active .nav-line { width: 40px; background: var(--accent); }
 
-.section p {
-  line-height: 1.8;
-  margin-bottom: 20px;
-}
+    /* Social links */
+    .socials {
+      display: flex;
+      gap: 16px;
+    }
 
-/* 강조 텍스트 */
-.highlight {
-  color: #ccd6f6;
-  font-weight: 500;
-}
+    .socials a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
 
-a.inline {
-  color: #ccd6f6;
-  text-decoration: none;
-  border-bottom: 1px solid #233554;
-}
+    .socials a:hover { color: var(--accent); }
 
-a.inline:hover {
-  color: #64ffda;
-  border-bottom: 1px solid #64ffda;
-}
+    /* Main content */
+    .main {
+      flex: 1;
+      padding: 80px 0 80px 80px;
+    }
 
-</style>
+    section {
+      margin-bottom: 100px;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 48px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    /* About */
+    .about-text {
+      font-size: 0.925rem;
+      color: var(--text-secondary);
+      line-height: 1.9;
+      max-width: 540px;
+    }
+
+    .about-text + .about-text {
+      margin-top: 16px;
+    }
+
+    .about-text a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(88,166,255,0.3);
+      transition: border-color 0.2s;
+    }
+
+    .about-text a:hover { border-color: var(--accent); }
+
+    /* Skills */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .skill-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(88,166,255,0.15);
+      padding: 4px 12px;
+      border-radius: 3px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Experience */
+    .exp-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 24px;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 4px;
+      transition: background 0.2s ease;
+      cursor: default;
+    }
+
+    .exp-item:hover {
+      background: var(--surface);
+    }
+
+    .exp-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      padding-top: 3px;
+      white-space: nowrap;
+    }
+
+    .exp-title {
+      font-size: 0.925rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .exp-company {
+      color: var(--accent);
+    }
+
+    .exp-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .exp-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 2px 10px;
+      border-radius: 3px;
+    }
+
+    /* Projects */
+    .project-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 24px;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 4px;
+      transition: background 0.2s ease;
+      cursor: default;
+    }
+
+    .project-item:hover {
+      background: var(--surface);
+    }
+
+    .project-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-secondary);
+      overflow: hidden;
+    }
+
+    .project-title {
+      font-size: 0.925rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .project-title a {
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .project-title a:hover { color: var(--accent); }
+
+    .project-title a svg {
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .project-title a:hover svg {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+      opacity: 0.6;
+    }
+
+    /* Contact */
+    .contact-text {
+      font-size: 0.925rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      line-height: 1.9;
+      margin-bottom: 28px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 4px;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    /* Footer note */
+    .footer-note {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      opacity: 0.5;
+      font-family: 'DM Mono', monospace;
+      margin-top: 80px;
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in:nth-child(2) { animation-delay: 0.2s; }
+    .fade-in:nth-child(3) { animation-delay: 0.3s; }
+    .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .layout {
+        flex-direction: column;
+        padding: 0 24px;
+      }
+      .sidebar {
+        position: relative;
+        height: auto;
+        width: 100%;
+        min-width: unset;
+        padding: 60px 0 40px;
+      }
+      nav { display: none; }
+      .main { padding: 40px 0 60px; }
+      .exp-item,
+      .project-item { grid-template-columns: 1fr; }
+      .exp-date { padding-top: 0; }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- 왼쪽 -->
-<div class="sidebar">
-  <h1>Kyunghyun Kim</h1>
-  <p>Battery Researcher</p>
+<div class="layout">
 
-  <div class="nav">
-    <a href="#about">ABOUT</a>
-    <a href="#experience">EXPERIENCE</a>
-    <a href="#projects">PROJECTS</a>
-  </div>
-</div>
+  <!-- Sidebar -->
+  <aside class="sidebar fade-in">
+    <div class="sidebar-top">
+      <h1>Your Name</h1>
+      <h2>Frontend Developer</h2>
+      <p>사용자 중심의 인터페이스를 만드는 개발자입니다. 깔끔한 코드와 좋은 경험을 지향합니다.</p>
 
-<!-- 오른쪽 -->
-<div class="content">
-
-  <div class="section" id="about">
-    <p>
-      I build and scale design systems and front-end architecture for digital products.
-      Currently, I'm focused on scalable plastic amorphous halide solid electrolytes for lithium metal batteries.
-    </p>
-
-    <p>
-      Through research and projects, I’ve worked across various areas
-of energy storage — from fundamental analysis to practical applications.
-I’m particularly interested in 
-<span class="highlight">solid-state batteries</span>,
-<span class="highlight">electrochemical analysis</span>, and
-<span class="highlight">ion transport mechanisms</span>,
-with a growing interest in 
-<span class="highlight">automated research systems</span> and
-<span class="highlight">self-driving laboratories</span>.
-    </p>
-
-
-
-    <p>
-      In my spare time, I enjoy cooking, hiking,
-      and exploring new ideas.
-    </p>
-  </div>
-
-  <div class="section" id="experience">
-    <p>
-      Experience section 
-<div class="section" id="experience">
-
-  <div class="exp-item">
-    <div class="exp-date">2025 — PRESENT</div>
-
-    <div class="exp-content">
-      <h3>M.S. Researcher · Hongik University</h3>
-
-      <p>
-        Conduct research in the Advanced Energy Materials Laboratory,
-        focusing on <span class="highlight">all-solid-state batteries</span>.
-        Work on the synthesis and characterization of
-        <span class="highlight">plastic amorphous halide solid electrolytes</span>,
-        investigating <span class="highlight">ion transport mechanisms</span>
-        and electrochemical performance.
-      </p>
-
-      <p>
-        Contributed to the development of scalable synthesis methods
-        for amorphous ceramic electrolytes, resulting in
-        <span class="highlight">patent filings (KR & US)</span>
-        and ongoing research publications.
-      </p>
-
-      <div class="tags">
-        <span>Solid-State Battery</span>
-        <span>EIS</span>
-        <span>CV</span>
-        <span>XRD</span>
-        <span>SEM</span>
-      </div>
+      <nav id="nav">
+        <a href="#about" class="active">
+          <span class="nav-line"></span> About
+        </a>
+        <a href="#experience">
+          <span class="nav-line"></span> Experience
+        </a>
+        <a href="#projects">
+          <span class="nav-line"></span> Projects
+        </a>
+        <a href="#contact">
+          <span class="nav-line"></span> Contact
+        </a>
+      </nav>
     </div>
-  </div>
 
-  <div class="exp-item">
-    <div class="exp-date">2023 — 2025</div>
+    <div class="socials">
+      <a href="https://github.com/" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+      <a href="mailto:your@email.com">Email</a>
+    </div>
+  </aside>
 
-    <div class="exp-content">
-      <h3>Research Intern · Hongik University</h3>
+  <!-- Main -->
+  <main class="main">
 
-      <p>
-        Worked as an undergraduate research intern in the Advanced Energy Materials Lab,
-        participating in projects on solid electrolytes for next-generation batteries.
-        Gained hands-on experience in material synthesis and electrochemical analysis.
+    <!-- About -->
+    <section id="about" class="fade-in">
+      <div class="section-label">About</div>
+
+      <p class="about-text">
+        안녕하세요. 저는 <strong style="color: var(--text-primary); font-weight: 500;">Your Name</strong>입니다.
+        웹 인터페이스를 설계하고 구현하는 것에 열정을 가지고 있으며,
+        사용자가 자연스럽게 사용할 수 있는 경험을 만드는 것을 좋아합니다.
+      </p>
+      <p class="about-text" style="margin-top: 14px;">
+        현재는 <a href="#">O O O 회사</a>에서 프론트엔드 개발자로 근무하며,
+        주로 React와 TypeScript 기반의 프로덕트를 개발하고 있습니다.
+        여가 시간에는 오픈 소스 프로젝트에 기여하거나 새로운 기술을 탐구합니다.
       </p>
 
-      <div class="tags">
-        <span>Battery Materials</span>
-        <span>Electrochemistry</span>
-        <span>Material Analysis</span>
+      <div class="skills-grid">
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">TypeScript</span>
+        <span class="skill-tag">Next.js</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Tailwind CSS</span>
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">REST API</span>
       </div>
-    </div>
-  </div>
+    </section>
 
+    <!-- Experience -->
+    <section id="experience" class="fade-in">
+      <div class="section-label">Experience</div>
+
+      <div class="exp-item">
+        <span class="exp-date">2023 &mdash; 현재</span>
+        <div>
+          <div class="exp-title">
+            Frontend Developer &middot; <span class="exp-company">회사명</span>
+          </div>
+          <p class="exp-desc">
+            React 기반의 SPA를 설계 및 유지보수하고, 사내 디자인 시스템을 구축하여
+            팀 개발 생산성을 30% 향상시켰습니다. 퍼포먼스 최적화를 통해 Lighthouse 점수를
+            74점에서 96점으로 개선하였습니다.
+          </p>
+          <div class="exp-tags">
+            <span class="exp-tag">React</span>
+            <span class="exp-tag">TypeScript</span>
+            <span class="exp-tag">Storybook</span>
+            <span class="exp-tag">Webpack</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="exp-item">
+        <span class="exp-date">2022 &mdash; 2023</span>
+        <div>
+          <div class="exp-title">
+            Web Developer Intern &middot; <span class="exp-company">인턴 회사명</span>
+          </div>
+          <p class="exp-desc">
+            마케팅 랜딩 페이지 제작 및 A/B 테스트 운영을 담당하였습니다.
+            반응형 UI 구현 및 크로스 브라우저 호환성 이슈를 해결하였습니다.
+          </p>
+          <div class="exp-tags">
+            <span class="exp-tag">JavaScript</span>
+            <span class="exp-tag">HTML/CSS</span>
+            <span class="exp-tag">Vue.js</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="exp-item">
+        <span class="exp-date">2018 &mdash; 2022</span>
+        <div>
+          <div class="exp-title">
+            학교명 대학교 &middot; <span class="exp-company">컴퓨터공학과</span>
+          </div>
+          <p class="exp-desc">
+            소프트웨어 엔지니어링, 알고리즘, 데이터베이스 과목을 중점적으로 수강하였습니다.
+            졸업 프로젝트로 실시간 협업 도구를 개발하였습니다.
+          </p>
+          <div class="exp-tags">
+            <span class="exp-tag">학사</span>
+            <span class="exp-tag">GPA 3.8</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="fade-in">
+      <div class="section-label">Projects</div>
+
+      <div class="project-item">
+        <div class="project-img">
+          <!-- 이미지 또는 썸네일 -->
+          preview
+        </div>
+        <div>
+          <div class="project-title">
+            <a href="#" target="_blank">
+              프로젝트 이름
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+          </div>
+          <p class="project-desc">
+            Next.js와 Supabase를 활용한 풀스택 프로젝트입니다.
+            실시간 데이터 동기화와 인증 기능을 구현하였으며,
+            Vercel을 통해 배포되었습니다.
+          </p>
+          <div class="exp-tags">
+            <span class="exp-tag">Next.js</span>
+            <span class="exp-tag">Supabase</span>
+            <span class="exp-tag">Tailwind</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="project-item">
+        <div class="project-img">preview</div>
+        <div>
+          <div class="project-title">
+            <a href="#" target="_blank">
+              두 번째 프로젝트
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+          </div>
+          <p class="project-desc">
+            오픈 API를 활용한 데이터 시각화 대시보드입니다.
+            Chart.js와 D3를 조합하여 인터랙티브한 그래프를 구현하였습니다.
+          </p>
+          <div class="exp-tags">
+            <span class="exp-tag">React</span>
+            <span class="exp-tag">D3.js</span>
+            <span class="exp-tag">REST API</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="project-item">
+        <div class="project-img">preview</div>
+        <div>
+          <div class="project-title">
+            <a href="#" target="_blank">
+              세 번째 프로젝트
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </a>
+          </div>
+          <p class="project-desc">
+            CLI 기반의 개발 생산성 도구입니다. Node.js로 제작하였으며,
+            반복적인 코드 생성 작업을 자동화하는 데 활용됩니다.
+          </p>
+          <div class="exp-tags">
+            <span class="exp-tag">Node.js</span>
+            <span class="exp-tag">CLI</span>
+            <span class="exp-tag">Open Source</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="fade-in">
+      <div class="section-label">Contact</div>
+
+      <p class="contact-text">
+        새로운 기회나 협업에 항상 열려 있습니다. 궁금한 점이나 제안이 있다면
+        편하게 연락 주세요. 최대한 빠르게 답변드리겠습니다.
+      </p>
+
+      <a href="mailto:your@email.com" class="contact-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+        your@email.com
+      </a>
+
+      <p class="footer-note" style="margin-top: 60px;">
+        Built with plain HTML &mdash; 2025
+      </p>
+    </section>
+
+  </main>
 </div>
-    </p>
-  </div>
 
-  <div class="section" id="projects">
-    <p>
-      Projects section (추가 가능)
-    </p>
-  </div>
+<script>
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
 
-</div>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(section => observer.observe(section));
+</script>
 
 </body>
 </html>
